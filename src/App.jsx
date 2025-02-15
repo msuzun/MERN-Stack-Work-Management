@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Button } from 'antd'
 function App() {
 
   return (
@@ -6,6 +7,7 @@ function App() {
       <h1>
         SheyTracker
       </h1>
+      <Button type='primary'>Button</Button>
    </div>
   )
 }
