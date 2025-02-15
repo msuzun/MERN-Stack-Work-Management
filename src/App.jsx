@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import { Button } from 'antd'
+import { BrowserRouter,Routes,Route } from "react-router-dom"
+import Register from "./pages/Register"
+import Login from "./pages/Login"
+import Home from "./pages/Home"
 function App() {
 
   return (
-   <div className='flex justify-center h-screen items-center flex-col bg-red-500'>
-      <h1>
-        SheyTracker
-      </h1>
-      <Button type='primary'>Button</Button>
-   </div>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
