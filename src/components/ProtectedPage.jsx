@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetLoggedInUser } from '../apicalls/users';
 import { App, message as antdMessage } from "antd"
+import { useDispatch, useSelector } from 'react-redux';
+import { SetUser } from '../redux/usersSlice';
 
 function ProtectedPage({ children }) {
     const [messageApi, contextHolder] = antdMessage.useMessage();
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const dispacth = useDispatch();
+    const {user} = useSelector((state)=> state.users);
     const getUser = async () => {
         try {
             const response = await GetLoggedInUser();
             console.log(response);
             if (response.success) {
                 console.log(response);
-                setUser(response.data);
+               dispacth(SetUser(response.data));
             }
             else {
                 throw new Error(response.message);
