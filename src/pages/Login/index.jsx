@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Input, Button, App, message as antdMessage } from "antd"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Divider from '../../components/Divider'
 import { LoginUser } from '../../apicalls/users'
 const Login = () => {
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = antdMessage.useMessage();
   const onFinish = async (values) => {
     try {
@@ -11,7 +12,7 @@ const Login = () => {
       if (response.success) {
         localStorage.setItem("token", response.data)
         messageApi.success(response.message);
-        window.location.href = "/"
+        navigate("/");
       }
       else {
         throw new Error(response.message);
@@ -20,6 +21,11 @@ const Login = () => {
       messageApi.error(error.message);
     }
   }
+  useEffect(()=>{
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  },[]);
   return (
     <App>
       {contextHolder}

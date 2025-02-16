@@ -5,6 +5,7 @@ import Divider from '../../components/Divider'
 import { RegisterUser } from '../../apicalls/users'
 
 const Register = () => {
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = antdMessage.useMessage();
 
   const onFinish = async (values) => {
@@ -12,6 +13,7 @@ const Register = () => {
       const response = await RegisterUser(values);
       if (response.success) {
         messageApi.success(response.message);
+        navigate("/login");
       } else {
         throw new Error(response.message);
       }
@@ -19,7 +21,11 @@ const Register = () => {
       messageApi.error(error.message);
     }
   };
-
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/")
+    }
+  }, []);
   return (
     <App>
       {contextHolder}
