@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '../../../redux/loadersSlice';
-import { CreateProject } from '../../../apicalls/projects';
+import { CreateProject, EditProject } from '../../../apicalls/projects';
 const ProjectForm = ({
     show,
     setShow,
@@ -16,9 +16,12 @@ const ProjectForm = ({
     const dispatch = useDispatch();
     const onFinish = async (values) => {
         try {
+            let response = null;
             dispatch(SetLoading(true))
             if (project) {
-                //update project
+                //edit project
+                values._id = project._id;
+                response = await EditProject(values);
             }
             else {
                 //create project
@@ -27,18 +30,18 @@ const ProjectForm = ({
                     user: user._id,
                     role: "owner"
                 }];
-                const response = await CreateProject(values);
-                dispatch(SetLoading(false));
-                if (response.success) {
-                    await messageApi.success(response.message);
-                    reloadData();
-                    setShow(false); 
-                }
-                else {
-                    throw new Error(response.error);
-                }
-                
+                response = await CreateProject(values);
             }
+            dispatch(SetLoading(false));
+            if (response.success) {
+                await messageApi.success(response.message);
+                reloadData();
+                setShow(false); 
+            }
+            else {
+                throw new Error(response.error);
+            }
+            
         } catch (error) {
             dispatch(SetLoading(false));
             messageApi.error(error.message);
@@ -47,8 +50,8 @@ const ProjectForm = ({
     return (
         <App>
             {contextHolder}
-            <Modal title="Add Project" open={show} onCancel={() => setShow(false)} centered width={700} onOk={() => { formRef.current.submit() }} okText="Save">
-                <Form layout='vertical' ref={formRef} onFinish={onFinish}>
+            <Modal title={project ? "Edit Project": "Add Project"} open={show} onCancel={() => setShow(false)} centered width={700} onOk={() => { formRef.current.submit() }} okText="Save">
+                <Form layout='vertical' ref={formRef} onFinish={onFinish} initialValues={project}>
                     <Form.Item label="Project Name" name="name">
                         <Input placeholder='Project Name' />
                     </Form.Item>

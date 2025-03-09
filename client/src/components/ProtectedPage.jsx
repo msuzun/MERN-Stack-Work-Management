@@ -38,7 +38,7 @@ function ProtectedPage({ children }) {
         }
     }, [])
     return (
-        <App>
+        user && (<App>
             {contextHolder}
             <div className="min-h-screen flex flex-col">
                 <header className="flex justify-between items-center bg-primary text-white m-px-5 m-py-4">
@@ -65,8 +65,7 @@ function ProtectedPage({ children }) {
 
                 </main>
             </div>
-        </App>
-
+        </App>)
     )
 }
 

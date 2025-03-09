@@ -27,7 +27,7 @@ router.post("/get-all-projects", authMiddleware, async (req, res) => {
         if (filters) {
             
         }
-        const projects = await Project.find(filters || {});
+        const projects = await Project.find(filters || {}).sort({createdAt: -1});
         res.send({
             success: true,
             data: projects
@@ -36,6 +36,37 @@ router.post("/get-all-projects", authMiddleware, async (req, res) => {
         res.send({
             error: error.message,
             success: false
+        })
+    }
+})
+
+// edit a project
+router.post('/edit-project',authMiddleware,async(req,res)=>{
+    try {
+        await Project.findByIdAndUpdate(req.body._id,req.body);
+        res.send({
+            success:true,
+            message: "Project updated successfully",
+        })
+    } catch (error) {
+        res.send({
+            error:error.message,
+            success:false,
+        })
+    }
+})
+//delete a project
+router.post('/delete-project',authMiddleware,async(req,res)=>{
+    try {
+        await Project.findByIdAndDelete(req.body._id);
+        res.send({
+            success:true,
+            message: "Project deleted successfully",
+        })
+    } catch (error) {
+        res.send({
+            error:error.message,
+            success:false
         })
     }
 })
