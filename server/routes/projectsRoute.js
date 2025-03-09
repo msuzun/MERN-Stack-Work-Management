@@ -21,7 +21,7 @@ router.post('/create-project', authMiddleware, async (req, res) => {
 })
 
 // get all projects
-router.get("/get-all-projects", authMiddleware, async (req, res) => {
+router.post("/get-all-projects", authMiddleware, async (req, res) => {
     try {
         const filters = req.body.filters;
         if (filters) {
