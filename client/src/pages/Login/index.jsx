@@ -9,14 +9,14 @@ import { getAntdFormInputRules } from '../../utils/helpers'
 const Login = () => {
   const { loading, buttonLoading } = useSelector((state) => state.loaders);
   console.log(buttonLoading)
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [messageApi, contextHolder] = antdMessage.useMessage();
   const onFinish = async (values) => {
     try {
-      dispacth(SetButtonLoading(true));
+      dispatch(SetButtonLoading(true));
       const response = await LoginUser(values);
-      dispacth(SetButtonLoading(false));
+      dispatch(SetButtonLoading(false));
       if (response.success) {
         localStorage.setItem("token", response.data)
         messageApi.success(response.message);
@@ -26,7 +26,7 @@ const Login = () => {
         throw new Error(response.message);
       }
     } catch (error) {
-      dispacth(SetButtonLoading(false));
+      dispatch(SetButtonLoading(false));
       messageApi.error(error.message);
     }
   }

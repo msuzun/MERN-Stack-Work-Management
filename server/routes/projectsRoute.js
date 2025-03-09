@@ -9,7 +9,8 @@ router.post('/create-project', authMiddleware, async (req, res) => {
         await newProject.save();
         res.send({
             success: true,
-            data: newProject
+            data: newProject,
+            message:"Project created successfully!"
         })
     } catch (error) {
         res.send({

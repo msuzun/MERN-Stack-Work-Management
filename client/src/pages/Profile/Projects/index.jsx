@@ -10,7 +10,7 @@ const Projects = () => {
         <Button type="default" onClick={()=>setShow(true)}>Add Projects</Button>
     </div>
 
-    {show && <ProjectForm show={show} setShow={setShow} />}
+    {show && <ProjectForm show={show} setShow={setShow} reloadData={()=>{}}/>}
    </div>
   )
 }
