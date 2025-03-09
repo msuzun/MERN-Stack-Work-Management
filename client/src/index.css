@@ -6,7 +6,7 @@
 *{
     box-sizing: border-box;
     padding: 0;
-    font-family: "Montserrat", serif;
+    font-family: "Montserrat", serif !important;
     font-optical-sizing: auto;
     font-weight: 600;
 }
@@ -20,7 +20,11 @@ input{
     border-radius: 0 !important;
     border: 1px solid #d1d1d1 !important;
 }
-input:focus{
+textarea{
+    border-radius: 0 !important;
+    border: 1px solid #bbbbbb !important;
+}
+input:focus,textarea:focus{
     box-shadow: none !important;
     border: 1px solid #616161 !important;
 }
